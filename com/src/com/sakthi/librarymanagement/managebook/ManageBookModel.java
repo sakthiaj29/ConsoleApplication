@@ -31,11 +31,11 @@ public class ManageBookModel {
 	}
 
 	public Book borrowBook(long id, String emailId) {
-		return LibraryDataBase.getInstance().getBook(id, emailId);
+		return LibraryDataBase.getInstance().getBorrowedBook(id, emailId);
 	}
 
 	public Book returnBook(long id, String emailId) {
-		return LibraryDataBase.getInstance().setBook(id, emailId);
+		return LibraryDataBase.getInstance().setBorrowedBook(id, emailId);
 	}
 
 	public List<BorrowedBook> onShowBorrowedBooks(String emailId) {

@@ -12,7 +12,7 @@ public class UserPage {
 	private final byte SEARCH_BOOKS = 2;
 	private final byte BOOK_BORROW = 3;
 	private final byte RETURN_BOOK = 4;
-	private final byte BORROWED_BOOKS = 5;
+	private final byte VIEW_BORROWED_BOOKS = 5;
 	private final byte LOGOUT_PAGE = 0;
 	private ManageBookView manageBookView;
 	private Scanner scanner = new Scanner(System.in);
@@ -27,7 +27,7 @@ public class UserPage {
 		while (true) {
 			System.out.println("\n\n <------------------------> User Page <------------------------>");
 			System.out.println(
-					"\n 1)View All Book\n\n 2)Search Book\n\n 3)Book Borrow\n\n 4)Return Book\n\n 5)Borrowed Book\n\n 0)Logout");
+					"\n 1)View All Book\n\n 2)Search Book\n\n 3)Book Borrow\n\n 4)Return Book\n\n 5)View Borrowed Book\n\n 0)Logout");
 			System.out.print("\n Enter your option: ");
 			choice = scanner.nextInt();
 			if (choice == VIEW_All_BOOK) {
@@ -38,7 +38,7 @@ public class UserPage {
 				onBookBorrow(emailId);
 			} else if (choice == RETURN_BOOK) {
 				onReturnBook(emailId);
-			} else if (choice == BORROWED_BOOKS) {
+			} else if (choice == VIEW_BORROWED_BOOKS) {
 				onShowBorrowedBooks(emailId);
 			} else if (choice == LOGOUT_PAGE) {
 				onLogout();
@@ -64,7 +64,7 @@ public class UserPage {
 		System.out.print("\n Enter book id : ");
 		long id = scanner.nextLong();
 		Book book = manageBookView.onReturnBook(id, emailId);
-		if (book == null) {
+		if (book.getName() == null) {
 			System.out.println("\n................................... Book not fount\n");
 		} else {
 			System.out.println("\n................................... '" + book.getName() + "' return successfully\n");
@@ -77,7 +77,7 @@ public class UserPage {
 		System.out.print("\n Enter book id : ");
 		long id = scanner.nextLong();
 		Book book = manageBookView.onBorrowBook(id, emailId);
-		if (book == null) {
+		if (book.getName() == null) {
 			System.out.println("\n................................... Book not fount\n");
 		} else {
 			System.out.println("\n................................... '" + book.getName() + "' borrowed successfully\n");

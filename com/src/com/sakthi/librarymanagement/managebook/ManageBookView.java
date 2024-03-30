@@ -41,14 +41,18 @@ public class ManageBookView {
 	}
 
 	public void initAdd() {
-		System.out.println("\n__________Add book__________");
+		System.out.println("\n\t__________ Add book __________");
 		Book book = new Book();
 		System.out.print("\nEnter book name: ");
-		book.setName(scanner.next());
+		scanner.nextLine();
+		book.setName(scanner.nextLine());
+
 		System.out.print("\nEnter book author: ");
-		book.setAuthor(scanner.next());
+		book.setAuthor(scanner.nextLine());
+		
 		System.out.print("\nEnter book genre: ");
-		book.setGenre(scanner.next());
+		book.setGenre(scanner.nextLine());
+		
 		System.out.print("\nEnter book count: ");
 		book.setCount(scanner.nextInt());
 		manageBookModel.addNewBook(book);
@@ -79,17 +83,16 @@ public class ManageBookView {
 	}
 
 	public void onSearchBooks() {
-		System.out.println("\n\t\t__________Search book__________");
+		System.out.println("\n\t\t__________ Search book __________");
 		System.out.print("\n Enter book name : ");
 		String name = scanner.next();
-		System.out.println(name);
 		List<Book> bookList = manageBookModel.searchBooks(name);
 		onShowBooks(bookList);
 	}
 
 	public void onShowAllBooks() {
 		List<Book> bookList = manageBookModel.viewAllBooks();
-		System.out.println("\n\t\t__________View all book__________");
+		System.out.println("\n\t\t__________ View all book __________");
 		onShowBooks(bookList);
 	}
 
@@ -98,12 +101,15 @@ public class ManageBookView {
 			System.out.println("\n ................................... No Book exist :(");
 		} else {
 			String available = "";
-			System.out.printf("\n %-20s\t %-8s\t %-10s\t %s", "Book name", "Book Id", "Book author", "Available/Not");
-			System.out.println("\n ---------------------------------------------------------------------");
+			System.out.printf("\n %-20s\t %-8s\t %-10s\t %-10s\t %s", "Book Name", "Book Id", "Book Author",
+					"Book Count", "Available/Not");
+			System.out
+					.println("\n ------------------------------------------------------------------------------------");
 			for (Book book : bookList) {
 				available = book.getCount() > 0 ? "Available" : "Not available";
-				System.out.printf(" %-20s\t %-8d\t %-10s\t %s", book.getName(), book.getId(), book.getAuthor(),
-						available);
+				System.out.printf(" %-20s\t %-8d\t %-10s\t %-10s\t %s", book.getName(), book.getId(), book.getAuthor(),
+						book.getCount(), available);
+				System.out.println();
 			}
 		}
 	}
@@ -121,14 +127,16 @@ public class ManageBookView {
 		if (borrowedBooks.size() == 0) {
 			System.out.println("\n ................................... No Book exist :(");
 		} else {
-			System.out.println("\n\t\t__________Borrowed book__________");
-			System.out.printf("\n %-18s\t %-10s\t %-10s\t %-13s %s", "Email Id", "Book Name", "Book author",
+			System.out.println("\n\t\t__________ Borrowed book __________");
+			System.out.println("\n Email Id : " + emailId);
+			System.out.printf("\n %-18s\t %-8s\t %-10s\t %-12s\t %s", "Book Name", "Book Id", "Book Author",
 					"Borrwed Date", "Return Date");
-			System.out.println("\n ---------------------------------------------------------------------------------");
+			System.out.println("\n ------------------------------------------------------------------------------------");
 			for (BorrowedBook borrowedBook : borrowedBooks) {
-				System.out.printf(" %-18s\t %-10s\t %-10s\t %-13s\t %s", borrowedBook.getEmailId(),
-						borrowedBook.getBook().getName(), borrowedBook.getBook().getAuthor(),
-						borrowedBook.getBorrowedDate().toString(), borrowedBook.getReturnDate().toString());
+				System.out.printf(" %-18s\t %-8s\t %-10s\t %-12s\t %s", borrowedBook.getBook().getName(),
+						borrowedBook.getBook().getId(), borrowedBook.getBook().getAuthor(),
+						borrowedBook.getBorrowedDate(), borrowedBook.getReturnDate());
+				System.out.println();
 			}
 		}
 	}

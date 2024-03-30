@@ -76,7 +76,6 @@ public class ManageUserView {
 		System.out.println("\n\t\t__________Search user__________");
 		System.out.print("\n Enter user name : ");
 		String name = scanner.next();
-		System.out.println(name);
 		List<User> userList = manageUserModel.searchUsers(name);
 		onViewUsers(userList);
 	}
@@ -86,9 +85,10 @@ public class ManageUserView {
 			System.out.println("\n ................................... No match exist :(");
 		} else {
 			System.out.printf("\n %-20s\t %-10s ", "User name", "User email Id");
-			System.out.println("\n -------------------------------------");
+			System.out.println("\n ----------------------------------------");
 			for (User user : userList) {
 				System.out.printf(" %-20s\t %-10s", user.getName(), user.getEmailId());
+				System.out.println();
 			}
 		}
 	}
@@ -101,6 +101,10 @@ public class ManageUserView {
 	public void onUserExist(User user) {
 		System.out.println("\n................................... User '" + user.getName() + "' already exist\n");
 		checkForAddNewUser();
+	}
+	public void showAlert(String alertText) {
+		System.err.println("\n\t\t"+alertText);
+		initAdd();
 	}
 
 }

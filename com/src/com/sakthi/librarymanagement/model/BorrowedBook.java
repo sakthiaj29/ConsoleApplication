@@ -1,13 +1,11 @@
 package com.sakthi.librarymanagement.model;
 
-import java.time.LocalDate;
-
 public class BorrowedBook {
 
 	private Book book;
 	private String emailId;
-	private LocalDate borrowedDate;
-	private LocalDate returnDate;
+	private String borrowedDate;
+	private String returnDate;
 
 	public Book getBook() {
 		return book;
@@ -25,19 +23,19 @@ public class BorrowedBook {
 		this.emailId = emailId;
 	}
 
-	public LocalDate getBorrowedDate() {
+	public String getBorrowedDate() {
 		return borrowedDate;
 	}
 
-	public void setBorrowedDate(LocalDate borrowedDate) {
+	public void setBorrowedDate(String borrowedDate) {
 		this.borrowedDate = borrowedDate;
 	}
 
-	public LocalDate getReturnDate() {
+	public String getReturnDate() {
 		return returnDate;
 	}
 
-	public void setReturnDate(LocalDate returnDate) {
+	public void setReturnDate(String returnDate) {
 		this.returnDate = returnDate;
 	}
 

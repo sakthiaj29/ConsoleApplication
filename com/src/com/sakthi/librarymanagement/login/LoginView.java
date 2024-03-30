@@ -56,7 +56,7 @@ public class LoginView {
 
 	private void checkForLogin() {
 		System.out.println("\nDo you try again? \nType Yes/No");
-		String choice = scanner.next();
+		String choice = scanner.nextLine();
 		if ("Yes".equalsIgnoreCase(choice)) {
 			proceedLogin();
 		} else if ("No".equalsIgnoreCase(choice)) {
@@ -71,6 +71,7 @@ public class LoginView {
 		Credentials credential = new Credentials();
 		System.out.print("\n Enter name: ");
 		credential.setUserName(scanner.nextLine());
+		//scanner.nextLine();
 		System.out.print("\n Enter password: ");
 		credential.setPassword(scanner.nextLine());
 		loginModel.validateUser(credential);

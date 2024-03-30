@@ -34,4 +34,17 @@ public class ManageCandidateModel {
 		}
 	}
 
+	public List<Candidate> getSelectedCandidate(int numberOfCandidate) {
+		return InterviewPanalDataBase.getInstance()
+				.getSelectedCandidateList(numberOfCandidate);
+	}
+
+	public List<Candidate> getAllCandidate() {
+		return InterviewPanalDataBase.getInstance().getCandidateList();
+	}
+
+	public boolean updateCandidate(short id, byte mark) {
+		return InterviewPanalDataBase.getInstance().updateCandidate(id, mark);
+	}
+
 }

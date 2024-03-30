@@ -22,7 +22,6 @@ public class LibrarySetupModel {
 	}
 
 	public void createLibrary(Library library) {
-
 		if (library.getName().length() <= 3 || 50 < library.getName().length()) {
 			librarySetupView.showAlert("Enter valid name");
 		} else if (!isValidMail(library.getEmailId())) {

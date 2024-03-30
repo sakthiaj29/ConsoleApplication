@@ -38,10 +38,10 @@ public class LoginModel {
 	}
 
 	private boolean isValidateAdminPassword(String password) {
-		return password.equals("s");
+		return password.equals("sakthi123");
 	}
 
 	private boolean isValidateAdminName(String userName) {
-		return userName.equals("s");
+		return userName.equals("adminSakthi");
 	}
 }

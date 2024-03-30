@@ -16,7 +16,7 @@ public class LibraryManagement {
 
 	private void create() {
 		LoginView loginView = new LoginView();
-		loginView.init();
+		loginView.init(); 
 	}
 
 	public String getAppName() {

@@ -1,9 +1,8 @@
 package com.sakthi.interviewpanel.managecandidate;
 
 import java.util.List;
-import java.util.Scanner;
 
-import com.sakthi.interviewpanel.datalayer.InterviewPanalDataBase;
+import java.util.Scanner;
 import com.sakthi.interviewpanel.model.Candidate;
 
 public class ManageCandidateView {
@@ -25,7 +24,7 @@ public class ManageCandidateView {
 		byte choice = -1;
 		System.out.println("\n <-----------------> Candidate Page <----------------->");
 		System.out.println(
-				"\n 1)Add candidate\n\n 2)Show all candidate\n\n 3)Update candidate\n\n 4)Result\n\n 5)Remove candidate\n\n 4)Exit");
+				"\n 1)Add candidate\n\n 2)Show all candidate\n\n 3)Update candidate\n\n 4)Result\n\n 5)Remove candidate\n\n 0)Exit");
 		System.out.print("\n Enter your choice : ");
 		choice = scanner.nextByte();
 		if (choice == ADD_CANDIDATE) {
@@ -50,34 +49,38 @@ public class ManageCandidateView {
 	private void showResult() {
 		System.out.print("Enter number of candidate you want : ");
 		int numberOfCandidate = scanner.nextInt();
-		int existNumberOfCandidate = InterviewPanalDataBase.getInstance().getNumberOfCandidate();
+		List<Candidate> candidateList = manageCandidateModel.getSelectedCandidate(numberOfCandidate);
 
-		if (0 < numberOfCandidate && numberOfCandidate <= existNumberOfCandidate) {
-			List<Candidate> candidateList = InterviewPanalDataBase.getInstance()
-					.getSelectedCandidateList(numberOfCandidate);
-			System.out.println("\n\t_____________ View Candidate ______________");
-			System.out.printf("\n  %-15s\t %-12s\t %-20s\t %-12s\t %s", "Candidate Name", "Candidate Id",
-					"Candidate Email", "Candidate Mark", "Interview Status");
-			System.out.print("\n  ----------------------------------------------------------------------------------------");
+		if (0 < numberOfCandidate) {
+			if(numberOfCandidate <= candidateList.size()) {
+				System.out.println("\n\t_____________ View Candidate ______________");
+				System.out.printf("\n  %-15s\t %-12s\t %-20s\t %-12s\t %s", "Candidate Name", "Candidate Id",
+						"Candidate Email", "Candidate Mark", "Interview Status");
+				System.out.print("\n  ----------------------------------------------------------------------------------------");
 
-			for (Candidate candidate : candidateList) {
-				System.out.printf("\n  %-15s\t %-12d\t %-20s\t %-12d\t %s", candidate.getName(), candidate.getId(),
-						candidate.getEmailId(), candidate.getMark(), "Selected");
+				for (Candidate candidate : candidateList) {
+					System.out.printf("\n  %-15s\t %-12d\t %-20s\t %-12d\t %s", candidate.getName(), candidate.getId(),
+							candidate.getEmailId(), candidate.getMark(), "Selected");
+				}
+
+				System.out.println("\n\nDo you want to send email for selected candidate? \nType Yes/No");
+				String choice = scanner.next();
+
+				if (choice.equalsIgnoreCase("yes")) {
+					System.out.println("\n\t\t * * * * * * * Email send Successfully * * * * * * *");
+					System.exit(0);
+				} else {
+					init();
+				}
 			}
-
-			System.out.println("\n\nDo you want to send email for selected candidate? \nType Yes/No");
-			String choice = scanner.next();
-
-			if (choice.equalsIgnoreCase("yes")) {
-				System.out.println("\n\t\t * * * * * * * Email send Successfully * * * * * * *");
-				System.exit(0);
-			} else {
+			else {
+				System.out.println("\n No candidate was selected!..");
 				init();
 			}
 
 		} else {
-			System.err.println("\t\t\t Invalid count");
-			System.out.println("Do you want to continue? \nType Yes/No");
+			System.err.println("\n\t\t\t Invalid count");
+			System.out.println("\nDo you want to continue? \nType Yes/No");
 			String choice = scanner.next();
 			if (choice.equalsIgnoreCase("yes")) {
 				showResult();
@@ -91,7 +94,7 @@ public class ManageCandidateView {
 	}
 
 	private void onShowAllCandidate() {
-		List<Candidate> candidateList = InterviewPanalDataBase.getInstance().getCandidateList();
+		List<Candidate> candidateList = manageCandidateModel.getAllCandidate();
 		if (candidateList.size() > 0) {
 			System.out.println("\n\t_____________ View Candidate ______________");
 			System.out.printf("\n  %-15s\t %-12s\t %-20s\t %-10s", "Candidate Name", "Candidate Id", "Candidate Email",
@@ -116,7 +119,7 @@ public class ManageCandidateView {
 		System.out.print("\nEnter your mark (?/10) : ");
 		byte mark = scanner.nextByte();
 		if (mark > 0 && mark < 11) {
-			if (InterviewPanalDataBase.getInstance().updateCandidate(id, mark)) {
+			if (manageCandidateModel.updateCandidate(id, mark)) {
 				System.out.println("\n............................ updated successfully :)");
 				
 				init();
@@ -156,7 +159,7 @@ public class ManageCandidateView {
 		candidate.setEmailId(scanner.next());
 		manageCandidateModel.addCandidate(candidate);
 	}
-
+	
 	private void checkForAddNewCandidate() {
 		System.out.println("\nDo you want to add more candidate? \nType Yes/No");
 		String choice = scanner.next();
@@ -183,11 +186,11 @@ public class ManageCandidateView {
 
 	public void onRemoveSuccess(Candidate candidate) {
 		System.out.println("\n ............................ '" + candidate.getName() + "' removed successfully :)");
-		checkForAddNewCandidate();
+		init();
 	}
 
 	public void onRemoveFaild(Candidate candidate) {
 		System.out.println("\n ............................ '" + candidate.getName() + "' not exist :(");
-		checkForAddNewCandidate();
+		init();
 	}
 }
